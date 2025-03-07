@@ -1,0 +1,120 @@
+app.js:
+This is the main application file containing the Node.js/Express.js code for your API.
+It includes the database connection, model definitions, route handling, authentication logic, and server startup.
+package.json:
+This file defines the project's dependencies and scripts.
+It lists the required Node.js packages (Express, Sequelize, PostgreSQL, JWT, bcrypt, swagger-ui-express).
+package-lock.json:
+This file ensures that the exact versions of dependencies are installed.
+.env.example:
+This file serves as a template for environment variables.
+It should include placeholders for database connection strings, JWT secrets, and other sensitive information
+swagger.json:
+This file contains the Swagger/OpenAPI specification for your API.
+It describes the API endpoints, request/response formats, and other details.
+# IMF Gadget API
+
+This API provides a secure way to manage gadgets for the Impossible Missions Force (IMF). It allows you to create, retrieve, update, and decommission gadgets, as well as trigger their self-destruct sequences.
+
+## Features
+
+* **Gadget Inventory Management:**
+    * Retrieve a list of all gadgets with randomly generated mission success probabilities.
+    * Add new gadgets with randomly generated codenames.
+    * Update existing gadget information.
+    * Decommission gadgets (mark as "Decommissioned" with a timestamp).
+    * Filter gadgets by status.
+* **Self-Destruct Sequence:**
+    * Trigger the self-destruct sequence for a specific gadget with a confirmation code.
+* **Authentication and Authorization:**
+    * Robust authentication and authorization using JWT (JSON Web Tokens).
+    * User registration and login.
+* **Documentation:**
+    * Swagger/OpenAPI documentation for easy API exploration.
+
+## Technologies
+
+* Node.js
+* Express.js
+* PostgreSQL
+* Sequelize (ORM)
+* JWT (JSON Web Tokens)
+* bcrypt
+* Swagger UI
+
+## Setup
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone <repository_url>
+    cd imf-gadget-api
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Configure environment variables:**
+
+    * Create a `.env` file in the root directory.
+    * Copy the contents of `.env.example` into `.env`.
+    * Replace the placeholders with your actual database credentials and JWT secret.
+    * Example `.env`:
+
+        ```
+        DATABASE_URL=postgres://<db_user>:<db_password>@<db_host>:<db_port>/<db_name>
+        JWT_SECRET=<your_jwt_secret>
+        PORT=3000
+        ```
+
+4.  **Run the application:**
+
+    ```bash
+    npm run dev # for development
+    npm start # for production
+    ```
+
+5.  **Access the API documentation:**
+
+    * Open your browser and navigate to `http://localhost:3000/api-docs`.
+
+## API Endpoints
+
+* **`/register` (POST):** Register a new user.
+* **`/login` (POST):** Log in and obtain a JWT.
+* **`/gadgets` (GET):** Retrieve a list of gadgets (requires authentication).
+    * `?status={status}`: filter by gadget status.
+* **`/gadgets` (POST):** Add a new gadget (requires authentication).
+* **`/gadgets/{id}` (PATCH):** Update a gadget (requires authentication).
+* **`/gadgets/{id}` (DELETE):** Decommission a gadget (requires authentication).
+* **`/gadgets/{id}/self-destruct` (POST):** Trigger self-destruct (requires authentication).
+
+## Authentication
+
+* All gadget-related endpoints require a valid JWT in the `Authorization` header.
+* The JWT should be in the format: `Bearer <token>`.
+
+## Deployment
+
+* This API can be deployed to platforms like Heroku, Render, or Railway.
+* Ensure that your environment variables are correctly configured on the deployment platform.
+* Ensure the database is reachable from the server.
+
+## Postman Collection
+
+* A Postman collection with example requests can be found at: \[Link to your Postman Collection]
+
+## Swagger Documentation
+
+* The Swagger documentation can be accessed at: `http://<your_deployed_url>/api-docs`
+
+## Example usage
+
+### Get all gadgets
+
+```bash
+curl --location --request GET 'http://localhost:3000/gadgets' \
+--header 'Authorization: Bearer <your_token>'
